@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise of Kingdoms - 3288 MGE</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-image: url('https://www.rok.guide/wp-content/uploads/2019/08/rok-wallpaper-26.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #ffcc00;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #444;
+            color: #fff;
+        }
+
+        input[type="number"] {
+            appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            appearance: none;
+            margin: 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ffcc00;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e6b800;
+        }
+
+        #submissionResult {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #adminSection {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Hidden button in top-right corner */
+        #hiddenButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>3288 MGE Registration</h1>
+        <form id="governorForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="power">Power:</label>
+                <input type="number" id="power" name="power" required>
+            </div>
+            <div class="form-group">
+                <label for="commander">Commander:</label>
+                <select id="commander" name="commander" required>
+                    <option value="">Select Commander</option>
+                    <option value="Attila">Attila</option>
+                    <option value="Guan Yu">Guan Yu</option>
+                    <option value="Leonidas I">Leonidas I</option>
+                    <option value="Chandragupta Maurya">Chandragupta Maurya</option>
+                    <option value="Xiang Yu">Xiang Yu</option>
+                    <option value="Trajan">Trajan</option>
+                    <option value="Amanitore">Amanitore</option>
+                    <option value="Sargon the Great">Sargon the Great</option>
+                    <option value="Boudica Prime">Boudica Prime</option>
+                    <option value="Scipio Africanus Prime">Scipio Africanus Prime</option>
+                    <option value="Heraclius">Heraclius</option>
+                    <option value="Henry V">Henry V</option>
+                    <option value="Tariq ibn Ziyad">Tariq ibn Ziyad</option>
+                    <option value="Nevsky">Nevsky</option>
+                    <option value="Flavius Aetius">Flavius Aetius</option>
+                    <option value="Theodora">Theodora</option>
+                    <option value="Zenobia">Zenobia</option>
+                    <option value="Jadwiga">Jadwiga</option>
+                    <option value="Choe Yeong">Choe Yeong</option>
+                    <option value="Eleanor">Eleanor</option>
+                    <option value="Justinian I">Justinian I</option>
+                    <option value="Jan Žižka">Jan Žižka</option>
+                    <option value="Bertrand">Bertrand</option>
+                    <option value="Genghis Khan">Genghis Khan</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="rank">Preferred Rank (1-10):</label>
+                <input type="number" id="rank" name="rank" min="1" max="10" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="submissionResult"></div>
+
+        <!-- Admin Section (Initially Hidden) -->
+        <div id="adminSection">
+            <button id="downloadCSV">Download CSV</button>
+        </div>
+
+        <!-- Hidden button for admin access -->
+        <button id="hiddenButton"></button>
+    </div>
+
+    <script>
+        let csvData = [["Username", "Power", "Commander", "Preferred Rank"]];
+        const adminPassword = "yourpassword"; // Set your password here
+
+        document.getElementById('governorForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const power = document.getElementById('power').value;
+            const commander = document.getElementById('commander').value;
+            const rank = document.getElementById('rank').value;
+
+            const resultDiv = document.getElementById('submissionResult');
+            resultDiv.innerHTML = `<p>Thank you, ${username}. You have registered for Mightiest Governor!</p>
+                                   <p>Commander: ${commander}</p>
+                                   <p>Power: ${power}</p>
+                                   <p>Preferred Rank: ${rank}</p>`;
+            
+            csvData.push([username, power, commander, rank]);
+
+            document.getElementById('governorForm').reset();
+        });
+
+        document.getElementById('downloadCSV').addEventListener('click', function() {
+            let csvContent = "data:text/csv;charset=utf-8," + csvData.map(e => e.join(",")).join("\n");
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "mge_registration.csv");
+            document.body.appendChild(link);
+            link.click();
+        });
+
+        // Hidden button for admin access
+        document.getElementById('hiddenButton').addEventListener('click', function() {
+            const userPassword = prompt("Enter admin password to access download:");
+            if (userPassword === adminPassword) {
+                document.getElementById('adminSection').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
