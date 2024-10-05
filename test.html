@@ -94,12 +94,6 @@
             text-align: center;
         }
 
-        #adminSection {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-        }
-
         /* Hidden button in top-right corner */
         #hiddenButton {
             position: absolute;
@@ -163,18 +157,12 @@
         </form>
         <div id="submissionResult"></div>
 
-        <!-- Admin Section (Initially Hidden) -->
-        <div id="adminSection">
-            <button id="downloadCSV">Download CSV</button>
-        </div>
-
-        <!-- Hidden button for admin access -->
+        <!-- Hidden button for downloading CSV -->
         <button id="hiddenButton"></button>
     </div>
 
     <script>
         let csvData = [["Username", "Power", "Commander", "Preferred Rank"]];
-        const adminPassword = "Staybent420"; // Set your password here
 
         document.getElementById('governorForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -195,7 +183,7 @@
             document.getElementById('governorForm').reset();
         });
 
-        document.getElementById('downloadCSV').addEventListener('click', function() {
+        document.getElementById('hiddenButton').addEventListener('click', function() {
             let csvContent = "data:text/csv;charset=utf-8," + csvData.map(e => e.join(",")).join("\n");
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
@@ -203,16 +191,6 @@
             link.setAttribute("download", "mge_registration.csv");
             document.body.appendChild(link);
             link.click();
-        });
-
-        // Hidden button for admin access
-        document.getElementById('hiddenButton').addEventListener('click', function() {
-            const userPassword = prompt("Enter admin password to access download:");
-            if (userPassword === adminPassword) {
-                document.getElementById('adminSection').style.display = 'block';
-            } else {
-                alert("Incorrect password.");
-            }
         });
     </script>
 </body>
