@@ -174,7 +174,7 @@
 
     <script>
         let csvData = [["Username", "Power", "Commander", "Preferred Rank"]];
-        const adminPassword = "bent420"; // Set your password here
+        const adminPassword = "Staybent420"; // Set your password here
 
         document.getElementById('governorForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -210,6 +210,8 @@
             const userPassword = prompt("Enter admin password to access download:");
             if (userPassword === adminPassword) {
                 document.getElementById('adminSection').style.display = 'block';
+            } else {
+                alert("Incorrect password.");
             }
         });
     </script>
